@@ -1,7 +1,9 @@
 import logging
+import os
 from datetime import datetime
 from os import PathLike, environ
 from pathlib import Path
+from typing import Literal
 
 import click
 import docker
@@ -22,9 +24,26 @@ log = logging.getLogger()
 LOCAL_PASSWD = environ.get("PASSWD", None)
 
 
-@click.group()
-def cli():
-    pass
+Shell = Literal["bash", "zsh", "fish"]
+
+SUPPORTED_SHELLS = click.Choice(["bash", "zsh", "fish"])
+
+
+@click.group(invoke_without_command=True)
+@click.option("--show-completion", type=SUPPORTED_SHELLS, default=None)
+@click.pass_context
+def cli(ctx: click.Context, show_completion: Shell | None = None):
+    if ctx.invoked_subcommand is not None:
+        return
+
+    if show_completion:
+        completion_str = os.popen(
+            f"_DUMPY_COMPLETE={show_completion}_source dumpy"
+        ).read()
+        click.echo(completion_str)
+        return
+
+    click.echo(ctx.get_help())
 
 
 @cli.command()
