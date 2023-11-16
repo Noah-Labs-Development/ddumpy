@@ -8,8 +8,8 @@ from typing import Literal
 import click
 import docker
 
-from dumpy.helpers.docker import docker_network
-from dumpy.postgresql import (
+from ddumpy.helpers.docker import docker_network
+from ddumpy.postgresql import (
     exec_pg_dump,
     exec_pg_restore,
     exec_pg_script,
@@ -38,7 +38,7 @@ def cli(ctx: click.Context, show_completion: Shell | None = None):
 
     if show_completion:
         completion_str = os.popen(
-            f"_DUMPY_COMPLETE={show_completion}_source dumpy"
+            f"_DDUMPY_COMPLETE={show_completion}_source ddumpy"
         ).read()
         click.echo(completion_str)
         return
