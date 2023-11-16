@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "dumpy"
+version = "0.1.0"
+description = "CLI for easily interacting with database dumps without having a local instance running by using docker"
+authors = ["vipierozan99 <victorpierozan@gmail.com>"]
+license = "LICENSE.md"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+docker = "^6.1.3"
+rich = "^13.7.0"
+click = "^8.1.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+dumpy = "dumpy.cli:cli"
